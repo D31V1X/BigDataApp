@@ -21,7 +21,7 @@
                 <select class="form-select" id="database" name="database" required>
                     <option value="" {%if not selected_db %}selected{% endif%} disabled selected>Seleccione una base de datos</option>
                     {% for db in databases %}
-                        <option value="{{ db }}" {% if selected_db == db_name %}selected{% endif %}>{{ db_name }}</option>
+                        <option value="{{ db }}" {% if selected_db == db %}selected{% endif %}>{{ db }}</option>
                     {% endfor %}
                 </select>
                 </div>
