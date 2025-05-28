@@ -29,7 +29,7 @@
             </form>
             {% if selected_db %}
                 <h2 class="mt-4">Colecciones en la base de datos "{{ selected_db }}":</h2>
-                {% if  collections_data %}
+                {% if  collection_data %}
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for collection in collections_data %}
+                        {% for collection in collection_data %}
                             <tr>
                                 <td>{{collection.index}}</td>
                                 <td>{{collection.name}}</td>
