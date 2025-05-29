@@ -83,7 +83,7 @@ def login():
                 sesion['username'] = username
                 sesion['password'] = password
                 #si las credenciales son correctas, redirigir al index
-                return redirect('/gestion_mongodb')
+                return redirect('/gestion_mongoDB')
             else:
                 error_message = "Usuario o contraseña incorrectos."
                 return render_template('login.html', error=error_message)
