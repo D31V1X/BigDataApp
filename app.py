@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import session, redirect, url_for
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
@@ -67,46 +67,47 @@ def contacto():
         else:
             return render_template('contacto.html', error=True)
         
-@app.route('/login', methods=['POST', 'GET'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        client  = connect_to_mongo()
+        client = connect_to_mongo()
         if client:
             db = client['administracion']
             seguridad_collection = db['seguridad']
+
             username = request.form.get('username')
             password = request.form.get('password')
 
-            #verificar las credenciales
-            user= seguridad_collection.find_one({'usuario': username, 'pass': password})
+            # Verificar credenciales
+            user = seguridad_collection.find_one({'usuario': username, 'pass': password})
+
             if user:
                 session['username'] = username
-                session['password'] = password
-                #si las credenciales son correctas, redirigir al index
-                return redirect('/gestionMongoDB')
+                # No guardes la contraseña en sesión
+                return redirect(url_for('gestionMongoDB'))
             else:
                 error_message = "Usuario o contraseña incorrectos."
-                return render_template('login.html', error=error_message)
-            
-
+                return render_template('login.html', error_message=error_message)
         else:
             error_message = "No se tiene conexión a la base de datos."
-            return render_template('login.html', error=error_message)
+            return render_template('login.html', error_message=error_message)
+    else:
+        # GET: mostrar el formulario sin errores
+        return render_template('login.html')
             
             
-
-@app.route('/', methods=['GET', 'POST'])
-
 
 @app.route('/gestionMongoDB', methods=['GET', 'POST'])
 def gestion_mongodb():
-    client          = connect_to_mongo()
-    database        = []
-    error_message   = None
+    client = connect_to_mongo()
+    database = []
+    error_message = None
+    selected_db = None
+    collection_data = []
+    registros = []
 
     if client:
         try:
-            #Get the database names
             database = client.list_database_names()
         except Exception as e:
             error_message = f"Error retrieving databases: {e}"
@@ -115,15 +116,22 @@ def gestion_mongodb():
             client.close()
     else:
         error_message = "Failed to connect to MongoDB."
-    
+
     if request.method == 'POST':
         selected_db = request.form.get('database')
+        # collection_name y limit sólo si planeas usar para mostrar registros
         collection_name = request.form.get('collection')
         limit = request.form.get('limit', 10)
-        registros = get_registros_data(selected_db, collection_name, limit)
         collection_data = get_collections_data(selected_db)
-        return render_template('index.html', databases=database,selected_db=selected_db ,collection_data=collection_data,registros=registros, error_message=error_message)
-    return render_template('index.html', databases=database, error_message=error_message)
+        registros = get_registros_data(selected_db, collection_name, limit)
+    return render_template('gestionmongoDB.html',
+                           databases=database,
+                           selected_db=selected_db,
+                           collection_data=collection_data,
+                           registros=registros,
+                           error_message=error_message)
+
+
 
 def get_collections_data(selected_db):
     client = connect_to_mongo()
