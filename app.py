@@ -67,7 +67,7 @@ def contacto():
         else:
             return render_template('contacto.html', error=True)
         
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST','GET'])
 def login():
     if request.method == 'POST':
         client  = connect_to_mongo()
