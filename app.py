@@ -1,8 +1,7 @@
-from flask import session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
-
 
 #Para llevar el secreto de la app desde las variables de entorno recomendada para seguridad
 app = Flask(__name__)
