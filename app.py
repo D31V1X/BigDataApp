@@ -92,13 +92,13 @@ def login():
         else:
             error_message = "No se tiene conexión a la base de datos."
             return render_template('login.html', error=error_message)
-        return render_template('login.html')
+            
             
 
 @app.route('/', methods=['GET', 'POST'])
 
 
-
+@app.route('/gestionMongoDB', methods=['GET', 'POST'])
 def gestion_mongodb():
     client          = connect_to_mongo()
     database        = []
