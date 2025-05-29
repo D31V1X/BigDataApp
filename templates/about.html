@@ -1,88 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-sca  le=1.0">
-        <title>BigData-Admin DEAC-Acerca de</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link href="{{ url_for('static', filename='css/landingPage.css') }}" rel="stylesheet">
-    </head>
-    <body>
-        <heade class="bg primary text-white text-center py-5">
-                       
-            <div class =container>
-                <h1 class="display-4">Proyecto Big Data Deivid Agudelo</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de - BigData-MiProyecto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='css/landingPage.css') }}" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0">BigData-MiProyecto</h1>
                 <nav>
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" style="color: #ff6600;" href="{{ url_for('index') }}">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: #ff6600;" href="{{ url_for('about') }}"><b>[Acerca de]</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: #ff6600;"href="{{ url_for('login') }}"  >Ingresar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="color: #ff6600;" href="{{ url_for('contacto') }}">Contacto</a>
-                        </li>
+                    <ul class="nav">
+                        <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/buscador">Buscador</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/about"><b>Acerca de</b></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login">Ingresar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/contacto">Contacto</a></li>
                     </ul>
                 </nav>
-             </div>   
-        </header>
-        <div class="container">
-            <br><br>
-            <div class="text-center" style="color: #000000;">
-                <h2>Bienvenido al Proyecto Big Data</h2>
-                <p>Este proyecto es una demostración de la gestión de bases de datos utilizando MongoDB.</p>
-                <p>Para más información, visita nuestras redes sociales.</p>
-                <br><br>
-                <div class "row justify-content-center">
-                    <div class="col-md-12">
-                        <h2>Deivid Enrique Agudelo Corzo</h2>
-                        <ul>
-                            <h3>Ing. Industrial</h3>
-                            <p>Universidad Central</p>
-                            <p>Maestria en Analítica de Datos</p>
-                        <ul>
-                    </div>
-                 </div>
-                 <div class ="row justify-content-center">
-                    <div class="col-md-12 social-link mt-3">
-                        <div class="d-grid gap-3 col-6 mx-auto">
-                            <a href="https://www.linkedin.com/in/deivid-agudelo-corzo-0b1b4a1b2/" target="_blank"
-                            class="btn btn-primary d-flex justify-content-center align-items-center gap-2 py-2">
-                                <img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/linkedin@2x.png"
-                                    alt="LinkedIn" style="width: 20px; height: 20px;">
-                                <span>LinkedIn</span>
-                            </a>
-
-                            <a href="https://github.com/deividac" target="_blank"
-                            class="btn btn-primary d-flex justify-content-center align-items-center gap-2 py-2">
-                                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-                                    alt="GitHub" style="width: 20px; height: 20px;">
-                                <span>GitHub</span>
-                            </a>
-
-                            <a href="https://www.instagram.com/deividac" target="_blank"
-                            class="btn btn-primary d-flex justify-content-center align-items-center gap-2 py-2">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
-                                    alt="Instagram" style="width: 20px; height: 20px;">
-                                <span>Instagram</span>
-                            </a>
-                        </div>                   
-                 </div>
-            <footer class="bg-light text-center text-lg-start">
-                <div class="container">
-                <p style="text-align: center;"><strong><span style="color: #000000;">&copy; Deivid Agudelo. Todos los derechos reservados.</span></strong></p>
-                <p style="text-align: center;"><strong><span style="color: #000000;" id="current year"></span></strong></p>
-                </div>
-            </footer>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-            <script>
-                // Obtener el año actual
-                const currentYear = new Date().getFullYear();
-                // Actualizar el contenido del elemento con id "current year"
-                document.getElementById('current year').textContent = currentYear;
-            </script>
+            </div>
         </div>
+    </header>
+
+    <div class="container">
+        <h1 class="text-center mb-4">BigData-MiProyecto</h1>
+        <h3 class="text-center mb-4">Descripción del Proyecto</h3>
+        <p class="text-center mb-4">Este proyecto es una aplicación web desarrollada para la gestión y análisis de datos utilizando MongoDB. Permite a los usuarios explorar bases de datos, visualizar colecciones y realizar consultas avanzadas sobre grandes volúmenes de información.</p>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <img src="static/Images/creador.png" alt="Foto del creador" class="profile-img">
+                <h4>XYZ</h4>
+                <p>Estudiante de Maestría en Analítica de Datos</p>
+                <p>Universidad Central</p>
+                
+                <div class="social-links mt-3">
+                    <a href="https://github.com/xyz" target="_blank" class="btn btn-primary">GitHub</a>
+                    <a href="https://linkedin.com/in/xyz" target="_blank" class="btn btn-warning">LinkedIn</a>
+                    <a href="https://twitter.com/xyz" target="_blank"  class="btn btn-success">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        <p class="mb-0">Creado por {{ creador }}</p>
+        <p class="mb-0" id="current-year"></p>
+        <p class="mb-0" id="version_app">{{ version }}</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq4cvVmFh9vju3MXgpoK" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html> 
