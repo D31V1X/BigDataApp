@@ -18,21 +18,21 @@
                             <a class="nav-link active" aria-current="page" style="color: #ff6600;" href="{{ url_for('index') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color: #ff6600;" href="{{ url_for('gestion_mongoDB') }}">Acerca de</a>
+                            <a class="nav-link" style="color: #ff6600;" href="{{ url_for('about') }}"><b>[Acerca de]</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color: #ff6600;"href="{{ url_for('gestion_mysql') }}"  >Ingresar</a>
+                            <a class="nav-link" style="color: #ff6600;"href="{{ url_for('login') }}"  >Ingresar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color: #ff6600;" href="{{ url_for('gestion_postgres') }}"><b>[Contacto]</b></a>
+                            <a class="nav-link" style="color: #ff6600;" href="{{ url_for('contacto') }}">Contacto</a>
                         </li>
                     </ul>
                 </nav>
              </div>   
         </header>
         <div class="container">
-            <form method="POST" class="mt-5">
-                <h1>Contacto</h1>
+            <form method="POST" class="mt-5" action="/contacto">
+                <h1>Contactar</h1>
                 <div class="mb-3">
                     <label for="name" class="form-label" style="color: #000000;">Nombre:</label>
                     <input type="text" class="form-control" id="name" name="name" required>
