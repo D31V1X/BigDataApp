@@ -3,6 +3,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
 
+
 #Para llevar el secreto de la app desde las variables de entorno recomendada para seguridad
 app = Flask(__name__)
 app.secret_key = os.environ.get('secret_key')
@@ -39,14 +40,12 @@ def index():
 def about():
     return render_template('about.html')
 
-@app.route('/contacto',methods=['GET', 'POST'])
+@app.route('/contacto', methods=['GET', 'POST'])
 def contacto():
     if request.method == 'POST':
         nombre = request.form.get('nombre')
         email = request.form.get('email')
         mensaje = request.form.get('mensaje')
-        #aqui puedes agregar la logica para enviar el mensaje a la base de datos de mongodbAtlas (administracion)
-        #colección "contactos"
         client = connect_to_mongo()
         if client:
             db = client['administracion']
@@ -57,14 +56,16 @@ def contacto():
                     'email': email,
                     'mensaje': mensaje
                 })
+                client.close()
                 return render_template('contacto.html', success=True)
             except Exception as e:
                 print(f"Error al insertar el contacto: {e}")
-                return render_template('contacto.html', error=True)
-            finally:
                 client.close()
+                return render_template('contacto.html', error=True)
         else:
             return render_template('contacto.html', error=True)
+    # Para GET (cuando solo accedes a la página sin enviar datos)
+    return render_template('contacto.html')
         
 @app.route('/login', methods=['GET', 'POST'])
 def login():
