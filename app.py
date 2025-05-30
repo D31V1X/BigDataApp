@@ -84,7 +84,7 @@ def login():
             if user:
                 session['username'] = username
                 # No guardes la contraseña en sesión
-                return redirect(url_for('gestionMongoDB'))
+                return redirect(url_for('gestion_mongodb'))
             else:
                 error_message = "Usuario o contraseña incorrectos."
                 return render_template('login.html', error_message=error_message)
