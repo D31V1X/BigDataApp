@@ -99,31 +99,40 @@ def login():
 
 @app.route('/gestionMongoDB', methods=['GET', 'POST'])
 def gestion_mongodb():
-    client = connect_to_mongo()
-    database = []
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
     error_message = None
     selected_db = None
     collection_data = []
     registros = []
+    database = []
 
+    client = connect_to_mongo()
     if client:
         try:
             database = client.list_database_names()
+
+            if request.method == 'POST':
+                selected_db = request.form.get('database')
+                collection_name = request.form.get('collection')
+                try:
+                    limit = int(request.form.get('limit', 10))
+                except ValueError:
+                    limit = 10
+
+                collection_data = get_collections_data(selected_db)
+
+                if collection_name:
+                    registros = get_registros_data(selected_db, collection_name, limit)
         except Exception as e:
-            error_message = f"Error retrieving databases: {e}"
+            error_message = f"Error retrieving data: {e}"
             print(error_message)
         finally:
             client.close()
     else:
         error_message = "Failed to connect to MongoDB."
 
-    if request.method == 'POST':
-        selected_db = request.form.get('database')
-        # collection_name y limit sólo si planeas usar para mostrar registros
-        collection_name = request.form.get('collection')
-        limit = request.form.get('limit', 10)
-        collection_data = get_collections_data(selected_db)
-        registros = get_registros_data(selected_db, collection_name, limit)
     return render_template('gestionmongoDB.html',
                            databases=database,
                            selected_db=selected_db,
