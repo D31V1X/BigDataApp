@@ -70,79 +70,84 @@ def contacto():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        client = connect_to_mongo()
-        if client:
-            db = client['administracion']
-            seguridad_collection = db['seguridad']
+        try:
+            client = connect_to_mongo()
+            if client:
+                db = client['administracion']
+                seguridad_collection = db['seguridad']
 
-            username = request.form.get('username')
-            password = request.form.get('password')
+                username = request.form.get('username')
+                password = request.form.get('password')
 
-            # Verificar credenciales
-            user = seguridad_collection.find_one({'usuario': username, 'pass': password})
+                print("Credenciales recibidas:", username, password)
 
-            if user:
-                session['username'] = username
-                # No guardes la contraseña en sesión
-                return redirect(url_for('gestion_mongodb'))
+                user = seguridad_collection.find_one({'usuario': username, 'pass': password})
+                print("Resultado búsqueda:", user)
+
+                if user:
+                    session['username'] = username
+                    print("Usuario autenticado:", session['username'])
+                    return redirect(url_for('gestion_mongodb'))
+                else:
+                    error_message = "Usuario o contraseña incorrectos."
+                    return render_template('login.html', error_message=error_message)
             else:
-                error_message = "Usuario o contraseña incorrectos."
+                error_message = "No se tiene conexión a la base de datos."
                 return render_template('login.html', error_message=error_message)
-        else:
-            error_message = "No se tiene conexión a la base de datos."
-            return render_template('login.html', error_message=error_message)
+        except Exception as e:
+            print("❌ Error en login:", e)
+            return f"Error interno: {str(e)}"
     else:
-        # GET: mostrar el formulario sin errores
         return render_template('login.html')
-            
             
 
 @app.route('/gestionMongoDB', methods=['GET', 'POST'])
 def gestion_mongodb():
     if 'username' not in session:
         return redirect(url_for('login'))
-
-    error_message = None
-    selected_db = None
-    collection_data = []
-    registros = []
-    database = []
-
+    
     try:
         client = connect_to_mongo()
-        if not client:
-            raise Exception("No se pudo conectar a MongoDB")
 
-        database = client.list_database_names()
+        # Obtener lista de bases de datos (excepto las internas)
+        databases = client.list_database_names()
+        system_dbs = ['admin', 'local', 'config']
+        databases = [db for db in databases if db not in system_dbs]
 
-        if request.method == 'POST':
-            selected_db = request.form.get('database')
-            collection_name = request.form.get('collection')
+        # Manejo de base seleccionada desde POST o GET
+        selected_db = request.form.get('database') if request.method == 'POST' else request.args.get('database')
+        collections_data = []
 
-            try:
-                limit = int(request.form.get('limit', 10))
-            except (TypeError, ValueError):
-                limit = 10
+        if selected_db:
+            db = client[selected_db]
+            collections = db.list_collection_names()
+            for index, collection_name in enumerate(collections, 1):
+                count = db[collection_name].count_documents({})
+                collections_data.append({
+                    'index': index,
+                    'name': collection_name,
+                    'count': count
+                })
 
-            collection_data = get_collections_data(selected_db)
-
-            if collection_name:
-                registros = get_registros_data(selected_db, collection_name, limit)
-
+        return render_template('gestionmongoDB.html',
+                               databases=databases,
+                               selected_db=selected_db,
+                               collection_data=collections_data,
+                               error_message=None,
+                               username=session['username'])
+    
     except Exception as e:
-        print("❌ ERROR en gestionMongoDB:", e)
-        error_message = f"Error interno: {e}"
+        print("❌ Error en gestion_mongodb:", e)
+        return render_template('gestionmongoDB.html',
+                               databases=[],
+                               selected_db=None,
+                               collection_data=[],
+                               error_message=f'Error al conectar con MongoDB: {str(e)}',
+                               username=session.get('username', ''))
 
-    finally:
-        if client:
-            client.close()
 
-    return render_template('gestionmongoDB.html',
-                           databases=database,
-                           selected_db=selected_db,
-                           collection_data=collection_data,
-                           registros=registros,
-                           error_message=error_message)
+
+
 
 
 
