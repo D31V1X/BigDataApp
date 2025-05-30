@@ -30,7 +30,7 @@
     </div>
 </header>
         <div class="container mt-5">
->            <div class="text-center"><h1>Proyecto Big Data Ucentral </h1></div>
+            <div class="text-center"><h1>Proyecto Big Data Ucentral </h1></div>
              {% if error_message %}
                 <div class="alert alert-danger" role="alert">
                     {{ error_message }}
@@ -50,7 +50,7 @@
             </form>
             {% if selected_db %}
                 <h2 class="mt-4">Colecciones en la base de datos "{{ selected_db }}":</h2>
-                {% if  collections_data %}
+                {% if  collection_data %}
                 <table class="table table-striped">
                     <thead>
                         <tr>
