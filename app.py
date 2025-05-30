@@ -108,30 +108,33 @@ def gestion_mongodb():
     registros = []
     database = []
 
-    client = connect_to_mongo()
-    if client:
-        try:
-            database = client.list_database_names()
+    try:
+        client = connect_to_mongo()
+        if not client:
+            raise Exception("No se pudo conectar a MongoDB")
 
-            if request.method == 'POST':
-                selected_db = request.form.get('database')
-                collection_name = request.form.get('collection')
-                try:
-                    limit = int(request.form.get('limit', 10))
-                except ValueError:
-                    limit = 10
+        database = client.list_database_names()
 
-                collection_data = get_collections_data(selected_db)
+        if request.method == 'POST':
+            selected_db = request.form.get('database')
+            collection_name = request.form.get('collection')
+            try:
+                limit = int(request.form.get('limit', 10))
+            except ValueError:
+                limit = 10
 
-                if collection_name:
-                    registros = get_registros_data(selected_db, collection_name, limit)
-        except Exception as e:
-            error_message = f"Error retrieving data: {e}"
-            print(error_message)
-        finally:
+            collection_data = get_collections_data(selected_db)
+
+            if collection_name:
+                registros = get_registros_data(selected_db, collection_name, limit)
+
+    except Exception as e:
+        error_message = f"Error interno: {e}"
+        print(error_message)
+
+    finally:
+        if client:
             client.close()
-    else:
-        error_message = "Failed to connect to MongoDB."
 
     return render_template('gestionmongoDB.html',
                            databases=database,
