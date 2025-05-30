@@ -118,9 +118,10 @@ def gestion_mongodb():
         if request.method == 'POST':
             selected_db = request.form.get('database')
             collection_name = request.form.get('collection')
+
             try:
                 limit = int(request.form.get('limit', 10))
-            except ValueError:
+            except (TypeError, ValueError):
                 limit = 10
 
             collection_data = get_collections_data(selected_db)
@@ -129,8 +130,8 @@ def gestion_mongodb():
                 registros = get_registros_data(selected_db, collection_name, limit)
 
     except Exception as e:
+        print("❌ ERROR en gestionMongoDB:", e)
         error_message = f"Error interno: {e}"
-        print(error_message)
 
     finally:
         if client:
@@ -142,6 +143,7 @@ def gestion_mongodb():
                            collection_data=collection_data,
                            registros=registros,
                            error_message=error_message)
+
 
 
 
@@ -186,5 +188,6 @@ def get_registros_data(selected_db, collection_name, limit=10):
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0",port=os.getenv("PORT",5000))
 
-
+if __name__ == '__main__':
+    app.run(debug=True)
         
