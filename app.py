@@ -146,6 +146,25 @@ def gestion_mongodb():
                                username=session.get('username', ''))
 
 
+@app.route('/ver_registros', methods=['GET'])
+def ver_registros():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    db_name = request.args.get('db')
+    collection_name = request.args.get('col')
+
+    if not db_name or not collection_name:
+        return "Faltan parámetros de base de datos o colección", 400
+
+    registros = get_registros_data(db_name, collection_name)
+
+    return render_template('registros.html', 
+                           registros=registros[:50], 
+                           db_name=db_name, 
+                           collection_name=collection_name,
+                           username=session['username'])
+
 
 
 
