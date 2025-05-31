@@ -20,7 +20,7 @@
                     <a class="nav-link" style="color: #ff6600;" href="{{ url_for('about') }}">Acerca de</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: #ff6600;" href="{{ url_for('login') }}">Ingresar</a>
+                    <a class="nav-link" style="color: #ff6600;" href="{{ url_for('login') }}"><b>Ingresar</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="color: #ff6600;" href="{{ url_for('contacto') }}">Contacto</a>
@@ -63,9 +63,14 @@
                     <tbody>
                         {% for collection in collection_data %}
                             <tr>
-                                <td>{{collection.index}}</td>
-                                <td>{{collection.name}}</td>
-                                <td>{{collection.count}}</td>
+                                <td>{{ collection.index }}</td>
+                                <td>{{ collection.name }}</td>
+                                <td>{{ collection.count }}</td>
+                                <td>
+                                    <a href="{{ url_for('ver_registros') }}?db={{ selected_db }}&col={{ collection.name }}" class="btn btn-sm btn-primary">
+                                        Ver registros
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
