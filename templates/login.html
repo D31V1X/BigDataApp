@@ -110,9 +110,9 @@
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${usuario.usuario}</td>
-                            <td>${usuario.pass}</td>
-                            <td>${usuario.permisos?.join(', ') || 'Sin permisos'}</td>
-                            <td>${usuario.fechaCreacion || 'No registrada'}</td>
+                            <td>${usuario.password}</td>
+                            <td>${usuario.rol || 'Usuario'}</td>
+                            <td>${usuario.fechaCreacion}</td>
                         `;
                         tablaUsuarios.appendChild(row);
                     });
