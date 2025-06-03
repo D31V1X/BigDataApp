@@ -76,7 +76,7 @@ def login():
             # Verificar credenciales en MongoDB
             user = security_collection.find_one({
                 'usuario': usuario,
-                'password': password
+                'pass': password
             })
             
             if user:
