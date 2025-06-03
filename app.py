@@ -9,7 +9,7 @@ import re
 from elasticsearch import Elasticsearch
 
 app = Flask(__name__)
-app.secret_key = 'tu_clave_secreta_aqui'  # Cambia esto por una clave secreta segura
+app.secret_key = 'ucentraldeivid'  # Cambia esto por una clave secreta segura
 
 # Agregar la función now al contexto de la plantilla
 @app.context_processor
@@ -17,13 +17,13 @@ def inject_now():
     return {'now': datetime.now}
 
 # Versión de la aplicación
-VERSION_APP = "Versión 2.2 del 3 de Junio del 2025"
-CREATOR_APP = "Deivid Agudelo\https://github.com/D31V1X/BigDataApp"
+VERSION_APP = "Versión 2.2 del Mayo 22 del 2025"
+CREATOR_APP = "Deivid Agudelo/https://github.com/D31V1X/BigDataApp"
 mongo_uri   = os.environ.get("MONGO_URI")
 
 if not mongo_uri:
     #uri = "mongodb+srv://DbCentral:DbCentral2025@cluster0.vhltza7.mongodb.net/?appName=Cluster0"
-    uri         = "mongodb+srv://DbCentral:DbCentral2025@cluster0.vhltza7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    uri         = "mongodb+srv://DbCentral:DbCentral@cluster0.gqd4gxq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     mongo_uri   = uri
 
 # Función para conectar a MongoDB
@@ -76,7 +76,7 @@ def login():
             # Verificar credenciales en MongoDB
             user = security_collection.find_one({
                 'usuario': usuario,
-                'pass': password
+                'password': password
             })
             
             if user:
