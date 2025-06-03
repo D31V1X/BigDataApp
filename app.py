@@ -17,8 +17,8 @@ def inject_now():
     return {'now': datetime.now}
 
 # Versión de la aplicación
-VERSION_APP = "Versión 2.2 del Mayo 22 del 2025"
-CREATOR_APP = "Nombre del creador/ruta github"
+VERSION_APP = "Versión 2.2 del 3 de Junio del 2025"
+CREATOR_APP = "Deivid Agudelo\https://github.com/D31V1X/BigDataApp"
 mongo_uri   = os.environ.get("MONGO_URI")
 
 if not mongo_uri:
@@ -39,8 +39,8 @@ def connect_mongo():
 
 # Configuración de Elasticsearch
 client = Elasticsearch(
-    "https://indexprueba-cb87f3.es.us-east-1.aws.elastic.cloud:443",
-    api_key="Q3VEYy1KWUJHdDB6RGdJR3gyc0g6cThLVzhJZS05eGxta0Q0NXQxTHYxZw=="
+    "https://bigdata-fc3fe6.es.us-east-1.aws.elastic.cloud:443",
+    api_key="dEgtTU41Y0JncUkyNFZvS3VuQWQ6UU1tYnRXRV9qMURtWDRVYm9xMEhfQQ=="
 )
 INDEX_NAME = "ucentral_test"
 
