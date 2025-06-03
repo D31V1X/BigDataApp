@@ -1,4 +1,0 @@
-pymongo
-flask
-gunicorn
-Neo4j
